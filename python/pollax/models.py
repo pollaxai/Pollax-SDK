@@ -29,6 +29,21 @@ class Agent(BaseModel):
     avg_duration: Optional[str] = None
 
 
+# Call lifecycle status. Matches values emitted by the Pollax backend.
+# 1.0.0 incorrectly used hyphenated values ('in-progress','no-answer') and
+# 'queued' — corrected in 1.1.0 to mirror server emission.
+CallStatus = Literal[
+    "initiated",
+    "ringing",
+    "in_progress",
+    "completed",
+    "failed",
+    "busy",
+    "no_answer",
+    "voicemail",
+]
+
+
 class Call(BaseModel):
     """Voice call model"""
 
@@ -36,7 +51,7 @@ class Call(BaseModel):
     agent_id: str
     to_number: str
     from_number: Optional[str] = None
-    status: Literal["queued", "ringing", "in-progress", "completed", "failed", "busy", "no-answer"]
+    status: CallStatus
     direction: Literal["inbound", "outbound"]
     duration: Optional[int] = None
     start_time: Optional[datetime] = None

@@ -7,3 +7,4 @@ export * from './integrations';
 export * from './phone-numbers';
 export * from './api-keys';
 export * from './voice-cloning';
+export * from './webhooks';

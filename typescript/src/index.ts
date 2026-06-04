@@ -4,7 +4,8 @@
  */
 
 export { Pollax as default } from './client';
-export { Pollax, PollaxConfig } from './client';
+export { Pollax } from './client';
+export type { PollaxConfig, RateLimitInfo } from './client';
 export * from './types';
 export * from './errors';
 export * from './resources';

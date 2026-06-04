@@ -19,15 +19,30 @@ class CallsResource:
         to_number: str,
         from_number: Optional[str] = None,
         metadata: Optional[dict] = None,
+        *,
+        idempotency_key: Optional[str] = None,
     ) -> Call:
-        """Create a new voice call."""
+        """Create a new voice call.
+
+        Args:
+            agent_id: ID of the agent to deploy on the call.
+            to_number: Destination phone number in E.164 format.
+            from_number: Optional Pollax-owned outbound number.
+            metadata: Tenant-defined metadata passed through to webhooks.
+            idempotency_key: Optional value sent as the ``Idempotency-Key``
+                header. Pollax caches the response for 24 hours; a retry with
+                the same key and same body replays the original response
+                without dialing a second call. See
+                https://docs.pollax.ai/api#idempotency.
+        """
         data = {
             "agent_id": agent_id,
             "to_number": to_number,
             "from_number": from_number,
             "metadata": metadata or {},
         }
-        response = self._client.request("POST", "/api/v1/calls", json=data)
+        headers = {"Idempotency-Key": idempotency_key} if idempotency_key else None
+        response = self._client.request("POST", "/api/v1/calls", json=data, headers=headers)
         return Call(**response)
 
     def list(
