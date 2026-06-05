@@ -7,9 +7,9 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
   "scripts": {
@@ -39,6 +39,9 @@
     "url": "https://github.com/pollaxai/Pollax-SDK/issues"
   },
   "homepage": "https://pollax.ai",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.6",
