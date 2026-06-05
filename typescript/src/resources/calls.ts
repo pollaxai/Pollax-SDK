@@ -5,23 +5,44 @@ import {
   ListCallsParams,
 } from '../types';
 
+/**
+ * Options accepted on mutating requests.
+ */
+export interface RequestOptions {
+  /**
+   * Send `Idempotency-Key: <value>` so a retry of the same request with the
+   * same body returns the cached response instead of double-charging /
+   * double-dialing. Any UUID or unique string up to 255 chars works.
+   * See https://docs.pollax.ai/api#idempotency for details.
+   */
+  idempotencyKey?: string;
+}
+
+function buildHeaders(opts?: RequestOptions): Record<string, string> | undefined {
+  if (opts?.idempotencyKey) {
+    return { 'Idempotency-Key': opts.idempotencyKey };
+  }
+  return undefined;
+}
+
 export class Calls {
   constructor(private request: <T = any>(config: AxiosRequestConfig) => Promise<T>) {}
 
   /**
-   * Create a new voice call
-   * 
+   * Create a new voice call.
+   *
    * @example
-   * const call = await pollax.calls.create({
-   *   agent_id: 'agent_123',
-   *   to_number: '+1234567890',
-   * });
+   * const call = await pollax.calls.create(
+   *   { agent_id: 'agent_123', to_number: '+1234567890' },
+   *   { idempotencyKey: `order-${orderId}` }
+   * );
    */
-  async create(params: CreateCallParams): Promise<Call> {
+  async create(params: CreateCallParams, options?: RequestOptions): Promise<Call> {
     return this.request<Call>({
       method: 'POST',
       url: '/api/v1/calls',
       data: params,
+      headers: buildHeaders(options),
     });
   }
 

@@ -4,28 +4,40 @@ import {
   CreateCampaignParams,
   UpdateCampaignParams,
 } from '../types';
+import { RequestOptions } from './calls';
+
+function buildHeaders(opts?: RequestOptions): Record<string, string> | undefined {
+  if (opts?.idempotencyKey) {
+    return { 'Idempotency-Key': opts.idempotencyKey };
+  }
+  return undefined;
+}
 
 export class Campaigns {
   constructor(private request: <T = any>(config: AxiosRequestConfig) => Promise<T>) {}
 
   /**
-   * Create a new campaign
-   * 
+   * Create a new campaign.
+   *
    * @example
-   * const campaign = await pollax.campaigns.create({
-   *   name: 'Q1 Outreach Campaign',
-   *   agent_id: 'agent_123',
-   *   contacts: [
-   *     { name: 'John Doe', phone: '+1234567890' },
-   *     { name: 'Jane Smith', phone: '+0987654321' },
-   *   ],
-   * });
+   * const campaign = await pollax.campaigns.create(
+   *   {
+   *     name: 'Q1 Outreach Campaign',
+   *     agent_id: 'agent_123',
+   *     contacts: [
+   *       { name: 'John Doe', phone: '+1234567890' },
+   *       { name: 'Jane Smith', phone: '+0987654321' },
+   *     ],
+   *   },
+   *   { idempotencyKey: 'q1-outreach-launch' }
+   * );
    */
-  async create(params: CreateCampaignParams): Promise<Campaign> {
+  async create(params: CreateCampaignParams, options?: RequestOptions): Promise<Campaign> {
     return this.request<Campaign>({
       method: 'POST',
       url: '/api/v1/campaigns',
       data: params,
+      headers: buildHeaders(options),
     });
   }
 

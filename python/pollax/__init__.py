@@ -4,7 +4,7 @@ Pollax Python SDK
 Official Python client library for the Pollax AI Voice Platform.
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 from .client import Pollax
 from .errors import (
@@ -17,6 +17,7 @@ from .errors import (
 from .models import (
     Agent,
     Call,
+    CallStatus,
     Campaign,
     KnowledgeDocument,
     Integration,
@@ -34,6 +35,7 @@ __all__ = [
     "ValidationError",
     "Agent",
     "Call",
+    "CallStatus",
     "Campaign",
     "KnowledgeDocument",
     "Integration",

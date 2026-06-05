@@ -60,12 +60,27 @@ export interface ListAgentsParams {
  * Call types
  */
 
+/**
+ * Call lifecycle status. Matches values emitted by the Pollax backend.
+ * Note: 1.0.0 incorrectly used hyphenated values ('in-progress','no-answer')
+ * and 'queued' — corrected in 1.1.0 to mirror server emission.
+ */
+export type CallStatus =
+  | 'initiated'
+  | 'ringing'
+  | 'in_progress'
+  | 'completed'
+  | 'failed'
+  | 'busy'
+  | 'no_answer'
+  | 'voicemail';
+
 export interface Call {
   call_sid: string;
   agent_id: string;
   to_number: string;
   from_number?: string;
-  status: 'queued' | 'ringing' | 'in-progress' | 'completed' | 'failed' | 'busy' | 'no-answer';
+  status: CallStatus;
   direction: 'inbound' | 'outbound';
   duration?: number;
   start_time?: string;
@@ -86,7 +101,7 @@ export interface CreateCallParams {
 
 export interface ListCallsParams {
   agent_id?: string;
-  status?: string;
+  status?: CallStatus;
   skip?: number;
   limit?: number;
 }
