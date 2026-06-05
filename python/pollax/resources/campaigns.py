@@ -21,6 +21,7 @@ class CampaignsResource:
         contacts: Optional[List[dict]] = None,
         enable_voicemail: Optional[bool] = None,
         voicemail_message: Optional[str] = None,
+        announcement_message: Optional[str] = None,
         *,
         idempotency_key: Optional[str] = None,
     ) -> Campaign:
@@ -46,6 +47,8 @@ class CampaignsResource:
             data["enable_voicemail"] = enable_voicemail
         if voicemail_message:
             data["voicemail_message"] = voicemail_message
+        if announcement_message:
+            data["announcement_message"] = announcement_message
         headers = {"Idempotency-Key": idempotency_key} if idempotency_key else None
         response = self._client.request("POST", "/api/v1/campaigns", json=data, headers=headers)
         return Campaign(**response)
