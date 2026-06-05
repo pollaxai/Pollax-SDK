@@ -19,6 +19,8 @@ class CampaignsResource:
         agent_id: Optional[str] = None,
         scheduled_time: Optional[str] = None,
         contacts: Optional[List[dict]] = None,
+        enable_voicemail: Optional[bool] = None,
+        voicemail_message: Optional[str] = None,
         *,
         idempotency_key: Optional[str] = None,
     ) -> Campaign:
@@ -40,6 +42,10 @@ class CampaignsResource:
             "scheduled_time": scheduled_time,
             "contacts": contacts or [],
         }
+        if enable_voicemail is not None:
+            data["enable_voicemail"] = enable_voicemail
+        if voicemail_message:
+            data["voicemail_message"] = voicemail_message
         headers = {"Idempotency-Key": idempotency_key} if idempotency_key else None
         response = self._client.request("POST", "/api/v1/campaigns", json=data, headers=headers)
         return Campaign(**response)

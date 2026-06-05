@@ -97,6 +97,10 @@ export interface CreateCallParams {
   to_number: string;
   from_number?: string;
   metadata?: Record<string, any>;
+  /** Leave a voicemail if an answering machine is detected (overrides the agent default). */
+  enable_voicemail?: boolean;
+  /** Message to leave on voicemail. Falls back to the agent's configured message when omitted. */
+  voicemail_message?: string;
 }
 
 export interface ListCallsParams {
@@ -142,6 +146,10 @@ export interface CreateCampaignParams {
     email?: string;
     metadata?: Record<string, any>;
   }>;
+  /** Leave a voicemail on every call where an answering machine is detected. */
+  enable_voicemail?: boolean;
+  /** Voicemail message for the campaign. Falls back to the agent's configured message. */
+  voicemail_message?: string;
 }
 
 export interface UpdateCampaignParams {
