@@ -7,7 +7,7 @@ Complete reference for the Pollax SDK.
 ### TypeScript/JavaScript
 
 ```typescript
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: string;        // Required: Your API key

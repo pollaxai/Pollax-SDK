@@ -5,7 +5,7 @@
 ### TypeScript/JavaScript
 
 ```bash
-npm install @pollax/sdk
+npm install pollax
 ```
 
 ### Python
@@ -26,7 +26,7 @@ pip install pollax
 ### TypeScript/JavaScript
 
 ```typescript
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: 'sk_live_your_api_key_here',

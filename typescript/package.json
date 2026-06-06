@@ -1,5 +1,5 @@
 {
-  "name": "@pollax/sdk",
+  "name": "pollax",
   "version": "1.2.0",
   "description": "Official Pollax SDK for TypeScript/JavaScript",
   "main": "dist/index.js",

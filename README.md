@@ -2,7 +2,7 @@
 
 Official SDKs for the Pollax AI Voice Platform
 
-[![npm version](https://img.shields.io/npm/v/@pollax/sdk.svg)](https://www.npmjs.com/package/@pollax/sdk)
+[![npm version](https://img.shields.io/npm/v/pollax.svg)](https://www.npmjs.com/package/pollax)
 [![PyPI version](https://img.shields.io/pypi/v/pollax.svg)](https://pypi.org/project/pollax/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -17,11 +17,11 @@ Official SDKs for the Pollax AI Voice Platform
 ### TypeScript/JavaScript
 
 ```bash
-npm install @pollax/sdk
+npm install pollax
 ```
 
 ```typescript
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: 'sk_live_...',
