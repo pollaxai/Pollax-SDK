@@ -1,6 +1,6 @@
 {
-  "name": "@pollax/sdk",
-  "version": "1.1.0",
+  "name": "pollax",
+  "version": "1.2.0",
   "description": "Official Pollax SDK for TypeScript/JavaScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

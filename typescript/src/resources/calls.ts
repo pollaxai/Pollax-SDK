@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import {
   Call,
+  CallsPage,
   CreateCallParams,
   ListCallsParams,
 } from '../types';
@@ -56,11 +57,36 @@ export class Calls {
    * });
    */
   async list(params?: ListCallsParams): Promise<Call[]> {
-    return this.request<Call[]>({
+    const res = await this.request<CallsPage | Call[]>({
       method: 'GET',
       url: '/api/v1/calls',
       params,
     });
+    // The API returns { data, pagination }; unwrap to the array for convenience.
+    return Array.isArray(res) ? res : (res?.data ?? []);
+  }
+
+  /**
+   * List calls WITH pagination metadata (total / page / pageSize / totalPages).
+   * Use for call-log views; supports status / agent_id / direction / date_from /
+   * date_to / search / page / limit filters.
+   *
+   * @example
+   * const { data, pagination } = await pollax.calls.listPage({ status: 'failed', page: 2 });
+   */
+  async listPage(params?: ListCallsParams): Promise<CallsPage> {
+    const res = await this.request<CallsPage | Call[]>({
+      method: 'GET',
+      url: '/api/v1/calls',
+      params,
+    });
+    if (Array.isArray(res)) {
+      return {
+        data: res,
+        pagination: { total: res.length, page: 1, pageSize: res.length, totalPages: 1 },
+      };
+    }
+    return res;
   }
 
   /**

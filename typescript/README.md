@@ -5,17 +5,17 @@ Official TypeScript/JavaScript SDK for the Pollax AI Voice Platform.
 ## Installation
 
 ```bash
-npm install @pollax/sdk
+npm install pollax
 # or
-yarn add @pollax/sdk
+yarn add pollax
 # or
-pnpm add @pollax/sdk
+pnpm add pollax
 ```
 
 ## Quick Start
 
 ```typescript
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: 'sk_live_your_api_key_here',
@@ -174,7 +174,7 @@ const performance = await pollax.analytics.getAgentPerformance('agent_123');
 ## Error Handling
 
 ```typescript
-import { PollaxError, AuthenticationError, NotFoundError } from '@pollax/sdk';
+import { PollaxError, AuthenticationError, NotFoundError } from 'pollax';
 
 try {
   const agent = await pollax.agents.retrieve('agent_123');
@@ -195,7 +195,7 @@ try {
 The SDK is written in TypeScript and provides complete type definitions:
 
 ```typescript
-import Pollax, { Agent, Call, Campaign } from '@pollax/sdk';
+import Pollax, { Agent, Call, Campaign } from 'pollax';
 
 const pollax = new Pollax({ apiKey: 'sk_live_...' });
 
@@ -218,7 +218,7 @@ The SDK works in modern browsers with module bundlers:
 
 ```html
 <script type="module">
-  import Pollax from '@pollax/sdk';
+  import Pollax from 'pollax';
 
   const pollax = new Pollax({
     apiKey: 'sk_live_...',

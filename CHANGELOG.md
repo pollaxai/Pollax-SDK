@@ -60,7 +60,7 @@ call = client.calls.create(
 
 ```js
 // Verify a webhook
-import { Pollax } from '@pollax/sdk';
+import { Pollax } from 'pollax';
 Pollax.verifyWebhookSignature(rawBody, req.header('Pollax-Signature'), SECRET);
 ```
 

@@ -108,7 +108,7 @@ Pollax-SDK/
 ### TypeScript/JavaScript
 
 ```typescript
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: 'sk_live_...',
@@ -172,7 +172,7 @@ transcript = client.calls.get_transcript(call.call_sid)
 
 ### TypeScript/JavaScript
 ```bash
-npm install @pollax/sdk
+npm install pollax
 ```
 
 ### Python

@@ -113,8 +113,27 @@ export interface CreateCallParams {
 export interface ListCallsParams {
   agent_id?: string;
   status?: CallStatus;
+  direction?: 'inbound' | 'outbound';
+  /** ISO date (YYYY-MM-DD) lower bound on created_at. */
+  date_from?: string;
+  /** ISO date (YYYY-MM-DD) upper bound on created_at. */
+  date_to?: string;
+  /** Free-text match on number / agent name. */
+  search?: string;
   skip?: number;
   limit?: number;
+  page?: number;
+}
+
+/** A page of calls with pagination metadata. */
+export interface CallsPage {
+  data: Call[];
+  pagination: {
+    total: number;
+    page: number;
+    pageSize: number;
+    totalPages: number;
+  };
 }
 
 /**

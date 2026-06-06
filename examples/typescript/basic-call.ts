@@ -8,7 +8,7 @@
  * - Getting call transcript
  */
 
-import Pollax from '@pollax/sdk';
+import Pollax from 'pollax';
 
 const pollax = new Pollax({
   apiKey: process.env.POLLAX_API_KEY || 'your-api-key-here',
