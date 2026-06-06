@@ -123,6 +123,32 @@ export class Campaigns {
   }
 
   /**
+   * Resume a paused campaign.
+   *
+   * @example
+   * await pollax.campaigns.resume('campaign_123');
+   */
+  async resume(campaignId: string): Promise<Campaign> {
+    return this.request<Campaign>({
+      method: 'POST',
+      url: `/api/v1/campaigns/${campaignId}/resume`,
+    });
+  }
+
+  /**
+   * Stop a campaign (mark it complete; no further calls are placed).
+   *
+   * @example
+   * await pollax.campaigns.complete('campaign_123');
+   */
+  async complete(campaignId: string): Promise<Campaign> {
+    return this.request<Campaign>({
+      method: 'POST',
+      url: `/api/v1/campaigns/${campaignId}/complete`,
+    });
+  }
+
+  /**
    * Upload contacts to a campaign via CSV
    * 
    * @example

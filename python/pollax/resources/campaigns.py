@@ -82,6 +82,16 @@ class CampaignsResource:
         response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/pause")
         return Campaign(**response)
 
+    def resume(self, campaign_id: str) -> Campaign:
+        """Resume a paused campaign."""
+        response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/resume")
+        return Campaign(**response)
+
+    def complete(self, campaign_id: str) -> Campaign:
+        """Stop a campaign (mark complete; no further calls are placed)."""
+        response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/complete")
+        return Campaign(**response)
+
     def get_stats(self, campaign_id: str) -> dict:
         """Get campaign statistics."""
         return self._client.request("GET", f"/api/v1/campaigns/{campaign_id}/stats")
