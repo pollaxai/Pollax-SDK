@@ -57,22 +57,57 @@ class CallsResource:
         response = self._client.request("POST", "/api/v1/calls", json=data, headers=headers)
         return Call(**response)
 
-    def list(
-        self,
-        agent_id: Optional[str] = None,
-        status: Optional[str] = None,
-        skip: int = 0,
-        limit: int = 100,
-    ) -> List[Call]:
-        """List all calls."""
+    def _list_params(self, agent_id, status, direction, date_from, date_to, search, skip, limit, page):
         params = {"skip": skip, "limit": limit}
         if agent_id:
             params["agent_id"] = agent_id
         if status:
             params["status"] = status
+        if direction:
+            params["direction"] = direction
+        if date_from:
+            params["date_from"] = date_from
+        if date_to:
+            params["date_to"] = date_to
+        if search:
+            params["search"] = search
+        if page is not None:
+            params["page"] = page
+        return params
 
+    def list(
+        self,
+        agent_id: Optional[str] = None,
+        status: Optional[str] = None,
+        direction: Optional[str] = None,
+        date_from: Optional[str] = None,
+        date_to: Optional[str] = None,
+        search: Optional[str] = None,
+        skip: int = 0,
+        limit: int = 100,
+        page: Optional[int] = None,
+    ) -> List[Call]:
+        """List calls with optional filters (status, agent, direction, date range, search)."""
+        params = self._list_params(agent_id, status, direction, date_from, date_to, search, skip, limit, page)
         response = self._client.request("GET", "/api/v1/calls", params=params)
-        return [Call(**item) for item in response]
+        items = response.get("data", []) if isinstance(response, dict) else (response or [])
+        return [Call(**item) for item in items]
+
+    def list_page(
+        self,
+        agent_id: Optional[str] = None,
+        status: Optional[str] = None,
+        direction: Optional[str] = None,
+        date_from: Optional[str] = None,
+        date_to: Optional[str] = None,
+        search: Optional[str] = None,
+        skip: int = 0,
+        limit: int = 100,
+        page: Optional[int] = None,
+    ) -> dict:
+        """List calls WITH pagination metadata ({"data": [...], "pagination": {...}})."""
+        params = self._list_params(agent_id, status, direction, date_from, date_to, search, skip, limit, page)
+        return self._client.request("GET", "/api/v1/calls", params=params)
 
     def retrieve(self, call_sid: str) -> Call:
         """Get a single call by SID."""
