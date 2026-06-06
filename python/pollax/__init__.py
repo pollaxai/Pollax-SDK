@@ -4,7 +4,7 @@ Pollax Python SDK
 Official Python client library for the Pollax AI Voice Platform.
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 from .client import Pollax
 from .errors import (
