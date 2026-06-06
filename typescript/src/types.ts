@@ -97,6 +97,17 @@ export interface CreateCallParams {
   to_number: string;
   from_number?: string;
   metadata?: Record<string, any>;
+  /** Leave a voicemail if an answering machine is detected (overrides the agent default). */
+  enable_voicemail?: boolean;
+  /** Message to leave on voicemail. Falls back to the agent's configured message when omitted. */
+  voicemail_message?: string;
+  /**
+   * One-way announcement: when a human answers, speak this message (rendered
+   * with `variables`) and hang up — no AI conversation. For reminders/alerts.
+   */
+  announcement_message?: string;
+  /** Variables substituted into announcement_message / agent prompts (e.g. {name}). */
+  variables?: Record<string, any>;
 }
 
 export interface ListCallsParams {
@@ -142,6 +153,12 @@ export interface CreateCampaignParams {
     email?: string;
     metadata?: Record<string, any>;
   }>;
+  /** Leave a voicemail on every call where an answering machine is detected. */
+  enable_voicemail?: boolean;
+  /** Voicemail message for the campaign. Falls back to the agent's configured message. */
+  voicemail_message?: string;
+  /** One-way announcement spoken on pickup (rendered per-contact via variables), then hang up. */
+  announcement_message?: string;
 }
 
 export interface UpdateCampaignParams {

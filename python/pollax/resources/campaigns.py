@@ -19,6 +19,9 @@ class CampaignsResource:
         agent_id: Optional[str] = None,
         scheduled_time: Optional[str] = None,
         contacts: Optional[List[dict]] = None,
+        enable_voicemail: Optional[bool] = None,
+        voicemail_message: Optional[str] = None,
+        announcement_message: Optional[str] = None,
         *,
         idempotency_key: Optional[str] = None,
     ) -> Campaign:
@@ -40,6 +43,12 @@ class CampaignsResource:
             "scheduled_time": scheduled_time,
             "contacts": contacts or [],
         }
+        if enable_voicemail is not None:
+            data["enable_voicemail"] = enable_voicemail
+        if voicemail_message:
+            data["voicemail_message"] = voicemail_message
+        if announcement_message:
+            data["announcement_message"] = announcement_message
         headers = {"Idempotency-Key": idempotency_key} if idempotency_key else None
         response = self._client.request("POST", "/api/v1/campaigns", json=data, headers=headers)
         return Campaign(**response)
@@ -71,6 +80,16 @@ class CampaignsResource:
     def pause(self, campaign_id: str) -> Campaign:
         """Pause a running campaign."""
         response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/pause")
+        return Campaign(**response)
+
+    def resume(self, campaign_id: str) -> Campaign:
+        """Resume a paused campaign."""
+        response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/resume")
+        return Campaign(**response)
+
+    def complete(self, campaign_id: str) -> Campaign:
+        """Stop a campaign (mark complete; no further calls are placed)."""
+        response = self._client.request("POST", f"/api/v1/campaigns/{campaign_id}/complete")
         return Campaign(**response)
 
     def get_stats(self, campaign_id: str) -> dict:

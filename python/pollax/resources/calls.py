@@ -19,6 +19,10 @@ class CallsResource:
         to_number: str,
         from_number: Optional[str] = None,
         metadata: Optional[dict] = None,
+        enable_voicemail: Optional[bool] = None,
+        voicemail_message: Optional[str] = None,
+        announcement_message: Optional[str] = None,
+        variables: Optional[dict] = None,
         *,
         idempotency_key: Optional[str] = None,
     ) -> Call:
@@ -41,6 +45,14 @@ class CallsResource:
             "from_number": from_number,
             "metadata": metadata or {},
         }
+        if enable_voicemail is not None:
+            data["enable_voicemail"] = enable_voicemail
+        if voicemail_message:
+            data["voicemail_message"] = voicemail_message
+        if announcement_message:
+            data["announcement_message"] = announcement_message
+        if variables:
+            data["variables"] = variables
         headers = {"Idempotency-Key": idempotency_key} if idempotency_key else None
         response = self._client.request("POST", "/api/v1/calls", json=data, headers=headers)
         return Call(**response)
