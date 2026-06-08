@@ -5,6 +5,17 @@ All notable changes to the Pollax SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Documented
+- **Per-call personalization with `variables`** — documented how `variables`
+  (already accepted by `calls.create` / `campaigns.create` since 1.1.0) flow into
+  the live AI conversation: they fill `{{placeholders}}` in the agent's system
+  prompt and welcome message, and are supplied as caller context so the agent can
+  answer questions from the data. Clarified placeholder conventions —
+  `{{variable}}` (also accepts `{variable}`) for agent prompts/welcome, `{variable}`
+  for the one-way `announcement_message`. No API or signature change.
+
 ## [1.1.0] - 2026-06-04
 
 This release aligns the SDKs with the public API surface shipped in the

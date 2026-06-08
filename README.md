@@ -100,6 +100,55 @@ call, _ := client.Calls.Create(&pollax.CallCreateParams{
 fmt.Printf("Call initiated: %s\n", call.CallSID)
 ```
 
+## Personalizing calls with variables
+
+Pass per-call `variables` to make the agent greet each caller by name and speak
+their specific data (balance, due date, order status, …). The values are
+substituted into the agent's **system prompt** and **welcome message**, and are
+also given to the agent as caller context so it can answer follow-up questions
+accurately ("what's my outstanding balance?").
+
+```typescript
+const call = await pollax.calls.create({
+  agentId: agent.id,
+  toNumber: '+1234567890',
+  variables: {
+    contact_name: 'Alex',
+    amount_due: '120',
+    due_date: '2025-07-01',
+  },
+});
+```
+
+```python
+call = pollax.calls.create(
+    agent_id=agent.id,
+    to_number='+1234567890',
+    variables={
+        'contact_name': 'Alex',
+        'amount_due': '120',
+        'due_date': '2025-07-01',
+    },
+)
+```
+
+Reference the variables in your agent's **system prompt** or **welcome message**
+with double braces:
+
+> "Hello {{contact_name}}, this is Riya from Acme — I'm calling about your
+> outstanding balance of {{amount_due}}, due {{due_date}}."
+
+**Placeholder conventions**
+
+| Where | Syntax | Example |
+| --- | --- | --- |
+| Agent system prompt & welcome message | `{{variable}}` (also accepts `{variable}`) | `{{contact_name}}` |
+| One-way `announcement_message` | `{variable}` | `{contact_name}` |
+
+- Unknown placeholders (no matching variable) are left as-is and never read aloud.
+- The same `variables` work on **campaigns** — set them per contact so every call
+  in a bulk run is personalized.
+
 ## Features
 
 - **AI Agent Management** - Create and manage voice agents
